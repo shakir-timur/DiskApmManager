@@ -23,7 +23,7 @@ namespace DiskAPMConfig
     /// </summary>
     public partial class MainWindow : Window
     {
-        ObservableCollection<DiskData> diskCollection;
+
 
         public MainWindow()
         {
@@ -35,10 +35,12 @@ namespace DiskAPMConfig
 
             DiskData dummy = new DiskData("Drive Dummy", "Dummy Model", "Serial No", "Status", 0, true);
 
-            diskCollection = new ObservableCollection<DiskData>();
-            diskCollection.Add(dummy);
+            DiskCollection = new ObservableCollection<DiskData>();
+            DiskCollection.Add(dummy);
+
+            DataContext = this;
         }
 
-
+        public ObservableCollection<DiskData> DiskCollection { get; set; }
     }
 }

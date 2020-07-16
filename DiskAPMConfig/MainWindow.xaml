@@ -24,9 +24,10 @@
             </TabItem>
         </TabControl>
 
-        <StackPanel Margin="10" >
-            <StackPanel.Resources>
-                <DataTemplate x:Key="DiskDataTemplate">
+        <ListView x:Name="DiskList" Margin="10" 
+                  ItemsSource="{Binding Path=DiskCollection}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
                     <StackPanel Margin="5">
                         <TextBlock TextWrapping="Wrap" Text="DiskModel"/>
                         <TextBlock TextWrapping="Wrap" Text="DiskSerNo"/>
@@ -34,10 +35,10 @@
                     </StackPanel>
                 </DataTemplate>
                 
-            </StackPanel.Resources>
+            </ListView.ItemTemplate>
             
 
-        </StackPanel>
+        </ListView>
 
         <Slider Grid.Column="1" Margin="55,55,55,0" VerticalAlignment="Top" Padding="0" Maximum="255" SmallChange="1" AutoToolTipPlacement="TopLeft"/>
 
