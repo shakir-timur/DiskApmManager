@@ -13,36 +13,41 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="DisksList" MinWidth="160" MaxWidth="400"/>
+            <ColumnDefinition x:Name="DisksList" MinWidth="180" MaxWidth="400"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
         <TabControl Grid.Column="1"  Margin="10" >
             <TabItem Header="APM">
-                <Grid Background="#FFF9F9F9">
+                <Grid Background="WhiteSmoke">
+                    <DockPanel>
+                        <Slider DockPanel.Dock="Top" Grid.Column="1" Margin="25,15,25,15" VerticalAlignment="Top" 
+                                Maximum="255" Minimum="1" SmallChange="1" AutoToolTipPlacement="TopLeft"/>
+                        <TextBlock DockPanel.Dock="Top" Text="{Binding Path=DiskCollection/Model}" Margin="15"/>
+                    </DockPanel>
                 </Grid>
             </TabItem>
         </TabControl>
 
-        <ListView x:Name="DiskList" Margin="10" 
-                  ItemsSource="{Binding Path=DiskCollection}">
+        <ListView x:Name="DiskList" Margin="10" IsSynchronizedWithCurrentItem="True"
+                  ItemsSource="{Binding Path=DiskCollection}" SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">
-                        <TextBlock TextWrapping="Wrap" Text="DiskModel"/>
-                        <TextBlock TextWrapping="Wrap" Text="DiskSerNo"/>
-                        <TextBlock TextWrapping="Wrap" Text="DiskStatus"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Path=Model}"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Path=SerialNo}"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Path=Size}"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Path=Status}"/>
                     </StackPanel>
                 </DataTemplate>
-                
+
             </ListView.ItemTemplate>
-            
+
 
         </ListView>
 
-        <Slider Grid.Column="1" Margin="55,55,55,0" VerticalAlignment="Top" Padding="0" Maximum="255" SmallChange="1" AutoToolTipPlacement="TopLeft"/>
-
-        <TextBlock x:Name="statusBar" Grid.Row="1" Grid.ColumnSpan="2" Text="Status" FontSize="14" Padding="2" Margin="2" Background="#FFF9F9F9"/>
+        <TextBlock x:Name="statusBar" Grid.Row="1" Grid.ColumnSpan="2" Text="Status" FontSize="14" 
+                   Padding="2" Margin="2" Background="#FFF9F9F9"/>
 
     </Grid>
 </Window>

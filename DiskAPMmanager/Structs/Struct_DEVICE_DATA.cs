@@ -133,10 +133,10 @@ namespace DiskAPMmanager.Structs
         public ushort word_167;
         public ushort word_168;
         public ushort word_169;
-        public ushort word_170;
-        public ushort word_171;
-        public ushort word_172;
-        public ushort word_173;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
+        public byte[] add_prod_id;        // Words 170..173: Additional Product Identifier
+
         public ushort word_174;
         public ushort word_175;
 

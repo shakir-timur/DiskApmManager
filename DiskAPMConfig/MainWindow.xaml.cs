@@ -31,12 +31,14 @@ namespace DiskAPMConfig
 
             //var diskList = DiskAPMmanager.Static.StaticMethods.GetRotaryDrives();
 
-            //diskCollection = new ObservableCollection<DiskData>(diskList);
-
-            DiskData dummy = new DiskData("Drive Dummy", "Dummy Model", "Serial No", "Status", 0, true);
+            //DiskCollection = new ObservableCollection<DiskData>(diskList);
+            
+            DiskData dummy1 = new DiskData("Drive Dummy1", "Dummy Model1", "Serial No1", "Status", "Size1", 0, true);
+            DiskData dummy2 = new DiskData("Drive Dummy2", "Dummy Model2", "Serial No2", "Status", "Size2", 0, true);
 
             DiskCollection = new ObservableCollection<DiskData>();
-            DiskCollection.Add(dummy);
+            DiskCollection.Add(dummy1);
+            DiskCollection.Add(dummy2);
 
             DataContext = this;
         }

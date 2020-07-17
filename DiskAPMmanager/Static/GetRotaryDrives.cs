@@ -30,7 +30,8 @@ namespace DiskAPMmanager.Static
                         SerialNo: ATACharsToString(idd.Value.serial_no).Trim(),
                         APMenabled: APMEnabled(idd.Value),
                         APMvalue: idd.Value.CurrentAPMvalue,
-                        Status: dd.Status
+                        Status: dd.Status,
+                        Size: dd.Size
                     );
 
                     result.Add(ndd);

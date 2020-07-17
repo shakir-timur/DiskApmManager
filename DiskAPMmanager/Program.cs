@@ -100,14 +100,15 @@ Suitable disks found on your machine (PHYSICALDRIVE0 is drive number 0):
         {
             var drivesList = StaticMethods.GetRotaryDrives();
 
-            var dummyDd = new DiskData("Drive Name", "Model", "Serial No", "Status", 0, true);
+            var dummyDd = new DiskData("Drive Name", "Model", "Serial No", "Status", "Size", 0, true);
 
             drivesList.Add(dummyDd);
 
             int nameLength = drivesList.Select(dd => dd.DeviceName.Trim(' ', '.', '\\')).Max(str => str.Length) + 2;
             int modelLength = drivesList.Select(dd => dd.Model).Max(str => str.Length) + 2;
-            int serNoLength = drivesList.Select(dd => dd.SerialNo).Max(str => str.Length) +2;
-            int statusLength = drivesList.Select(dd => dd.Status).Max(str => str.Length) +2;
+            int serNoLength = drivesList.Select(dd => dd.SerialNo).Max(str => str.Length) + 2;
+            int statusLength = drivesList.Select(dd => dd.Status).Max(str => str.Length) + 2;
+            int sizeLength = drivesList.Select(dd => dd.Size).Max(str => str.Length) + 2;
             int apmEnLength = Math.Max("APM on".Length, drivesList.Select(dd => dd.APMenabled).Max(str => str.ToString().Length)) + 2;
             int apmValLength = Math.Max("APM".Length, drivesList.Select(dd => dd.APMvalue).Max(str => str.ToString().Length)) + 2;
 
@@ -115,6 +116,7 @@ Suitable disks found on your machine (PHYSICALDRIVE0 is drive number 0):
 
             Console.Write("Drive Name".PadLeft(nameLength));
             Console.Write("Model".PadLeft(modelLength));
+            Console.Write("Size".PadLeft(sizeLength));
             Console.Write("Serial No".PadLeft(serNoLength));
             Console.Write("APM on".PadLeft(apmEnLength));
             Console.Write("APM".PadLeft(apmValLength));
@@ -126,6 +128,7 @@ Suitable disks found on your machine (PHYSICALDRIVE0 is drive number 0):
             {
                 Console.Write(dd.DeviceName.Trim(' ', '.', '\\').PadLeft(nameLength));
                 Console.Write(dd.Model.PadLeft(modelLength));
+                Console.Write(dd.Size.PadLeft(sizeLength));
                 Console.Write(dd.SerialNo.PadLeft(serNoLength));
                 Console.Write(dd.APMenabled.ToString().PadLeft(apmEnLength));
                 Console.Write(dd.APMvalue.ToString().PadLeft(apmValLength));

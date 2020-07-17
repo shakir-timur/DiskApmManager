@@ -8,27 +8,30 @@ namespace DiskAPMmanager.Structs
 {
     public struct DiskData
     {
-        public readonly string DeviceName;
-        public readonly string Model;
-        public readonly string SerialNo;
-        public readonly string Status;
-        public readonly byte APMvalue;
-        public readonly bool APMenabled;
+        public string DeviceName { get; }
+        public string Model { get; }
+        public string SerialNo { get; }
+        public string Status { get; }
+        public string Size { get; }
+        public byte APMvalue { get; }
+        public bool APMenabled { get; }
 
-        public DiskData(string DeviceName, string Model, string SerialNo, string Status, byte APMvalue, bool APMenabled)
+        public DiskData(string DeviceName, string Model, string SerialNo, string Status, string Size, byte APMvalue, bool APMenabled)
         {
             this.DeviceName = DeviceName;
             this.Model = Model;
             this.SerialNo = SerialNo;
             this.Status = Status;
+            this.Size = Size;
             this.APMvalue = APMvalue;
             this.APMenabled = APMenabled;
         }
 
-        public DiskData(string DeviceName, string Status)
+        public DiskData(string DeviceName, string Status, string Size)
         {
             this.DeviceName = DeviceName;
             this.Status = Status;
+            this.Size = Size;
 
             this.Model = null;
             this.SerialNo = null;

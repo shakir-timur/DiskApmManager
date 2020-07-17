@@ -23,9 +23,22 @@ namespace DiskAPMmanager.Windows
 
                 string status = mo.GetPropertyValue("Status").ToString();
 
+                string size = mo.GetPropertyValue("Size").ToString();
+
+                if (long.TryParse(size, out long sizeNum))
+                {
+                    sizeNum /= (1024 * 1024 * 1024);
+                    size = sizeNum.ToString() + " Gb";
+                }
+                else
+                {
+                    size = "?";
+                }
+
                 DiskData ns = new DiskData(
                     DeviceName: name,
-                    Status: status
+                    Status: status,
+                    Size: size
                 );
 
                 result.Add(ns);
