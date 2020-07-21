@@ -22,7 +22,7 @@ namespace DiskAPMmanager.Static
 
                 bool? b = IsRotativeDevice(idd.Value);
 
-                if (b.HasValue && b == true)
+                if (b.HasValue && b.Value == true)
                 {
                     DiskData ndd = new DiskData(
                         DeviceName: dd.DeviceName,
