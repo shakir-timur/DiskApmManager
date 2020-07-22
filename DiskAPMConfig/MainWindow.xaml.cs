@@ -14,17 +14,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DiskAPMmanager.Structs;
+using System.Security.Principal;
 
+using DiskAPMmanager.Structs;
+using System.Runtime.CompilerServices;
 
 namespace DiskAPMConfig
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public ObservableCollection<DiskData> DiskCollection { get; set; }
+
+        private readonly byte DefaultAPMvalue = 128;
+        private readonly byte DisableAPMValue = DiskAPMmanager.Static.StaticMethods.DISABLE_APM_VALUE;
+
+        public ProgramSettings Settings { get; set; }
 
         public MainWindow()
         {
@@ -33,30 +40,51 @@ namespace DiskAPMConfig
             DiskCollectionInit();
 
             DataContext = this;
+
+            Settings = new ProgramSettings(this, null);
+
+            NotifyPropertyChanged(nameof(Settings));
+        }
+
+        private DiskData? selectedDrive => DiskList.SelectedItem as DiskData?;
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void DiskCollectionInit()
         {
-            //var diskList = DiskAPMmanager.Static.StaticMethods.GetRotaryDrives();
+            var diskList = DiskAPMmanager.Static.StaticMethods.GetAPMRotaryDrives();
 
-            //DiskCollection = new ObservableCollection<DiskData>(diskList);
+            DiskCollection = new ObservableCollection<DiskData>(diskList);
 
-            DiskData dummy1 = new DiskData("Drive Dummy1", "Dummy Model1", "Serial No1", "Status", "500 Gb", 128, true);
-            DiskData dummy2 = new DiskData("Drive Dummy2", "Dummy Model2", "Serial No2", "Status", "320 Gb", 254, true);
+            //DiskData dummy1 = new DiskData("Drive Dummy1", "Dummy Model1", "Serial No1", "Status", "500 Gb", 128, true);
+            //DiskData dummy2 = new DiskData("Drive Dummy2", "Dummy Model2", "Serial No2", "Status", "320 Gb", 254, true);
 
-            DiskCollection = new ObservableCollection<DiskData>();
+            //DiskCollection = new ObservableCollection<DiskData>();
 
-            DiskCollection.Add(dummy1);
-            DiskCollection.Add(dummy2);
+            //DiskCollection.Add(dummy1);
+            //DiskCollection.Add(dummy2);
+
+            NotifyPropertyChanged(nameof(DiskCollection));
         }
 
         private void APMslider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (APMsettingDescription == null) return;
 
+            if (selectedDrive.HasValue && !selectedDrive.Value.APMenabled)
+            {
+                APMsettingDescription.Text = "APM disabled";
+                return;
+            }
+
             int v = (byte)APMslider.Value;
 
-            if (v == 0xFF) { APMsettingDescription.Text = "APM disabled"; return; }
             if (v == 0xFE) { APMsettingDescription.Text = "Maximum performance"; return; }
             if (v >= 0x81) { APMsettingDescription.Text = "Intermediate power management levels without Standby"; return; }
             if (v == 0x80) { APMsettingDescription.Text = "Minimum power consumption without Standby"; return; }
@@ -68,19 +96,47 @@ namespace DiskAPMConfig
 
         private void applyAPMbutton_Click(object sender, RoutedEventArgs e)
         {
+            DiskData? drive = selectedDrive;
 
-            byte newAPM = (byte) APMslider.Value;
-            DiskData? drive = DiskList.SelectedItem as DiskData?;
-            bool successfull = false;
+            if (!drive.HasValue) return;
 
-            if (drive.HasValue)
+            byte newAPM = (byte)APMslider.Value;
+
+            ApplyAPM(newAPM, drive.Value);
+        }
+
+        private void enableOrDisableAPMbutton_Click(object sender, RoutedEventArgs e)
+        {
+            DiskData? drive = selectedDrive;
+
+            if (!drive.HasValue) return;
+
+            if (drive.Value.APMenabled)
             {
-                successfull = DiskAPMmanager.Static.StaticMethods.SetAPM(drive.Value.DeviceName, newAPM);
+                byte newAPM = DisableAPMValue;
+
+                ApplyAPM(newAPM, drive.Value);
+
+                APMslider_ValueChanged(null, null);
             }
+            else
+            {
+                byte newAPM = DefaultAPMvalue;
+
+                ApplyAPM(newAPM, drive.Value);
+
+                APMslider_ValueChanged(null, null);
+            }
+        }
+
+        private void ApplyAPM(byte APMvalue, DiskData drive)
+        {
+            bool successfull = DiskAPMmanager.Static.StaticMethods.SetAPM(drive.DeviceName, APMvalue);
 
             if (successfull)
             {
                 statusBar.Text = "APM set successfully";
+                DiskCollectionInit();
             }
             else
             {
@@ -88,14 +144,19 @@ namespace DiskAPMConfig
             }
         }
 
-        private void disableAPMbutton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void reloadDiskListButton_Click(object sender, RoutedEventArgs e)
         {
             DiskCollectionInit();
+        }
+
+        private void CheckAdministratorPriviledges()
+        {
+            var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            bool isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+
+            if (!isAdmin)
+                statusBar.Text = "This program requires Administrator privileges";
         }
     }
 }

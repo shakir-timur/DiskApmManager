@@ -36,6 +36,8 @@ namespace DiskAPMmanager.Static
         const byte SETFEATURES_DIS_APM = 0x85;
         const byte SETFEATURES_EN_APM = 0x05;
 
+        // Program uses this value for disabling APM, though technically it is reserved
+        public const byte DISABLE_APM_VALUE = 255; 
 
         public static bool SetAPM(string driveName, byte apmVal)
         {
@@ -60,7 +62,7 @@ namespace DiskAPMmanager.Static
                         throw new ArgumentException("APM value cannot be 0");
                     }
                 // Disable APM
-                case 255:
+                case DISABLE_APM_VALUE:
                     {
                         aptx.CurrentTaskFile.bFeaturesReg = SETFEATURES_DIS_APM;
                         break;

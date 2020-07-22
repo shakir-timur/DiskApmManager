@@ -34,7 +34,7 @@ namespace DiskAPMmanager
 
                 string drName = "\\\\.\\PHYSICALDRIVE" + diskNo;
 
-                List<DiskData> driveNames = StaticMethods.GetRotaryDrives();
+                List<DiskData> driveNames = StaticMethods.GetAPMRotaryDrives();
 
                 if (!driveNames.Any(dd => dd.DeviceName == drName))
                 {
@@ -98,7 +98,7 @@ Suitable disks found on your machine (PHYSICALDRIVE0 is drive number 0):
 
         static void PrintDiskStatus()
         {
-            var drivesList = StaticMethods.GetRotaryDrives();
+            var drivesList = StaticMethods.GetAPMRotaryDrives();
 
             var dummyDd = new DiskData("Drive Name", "Model", "Serial No", "Status", "Size", 0, true);
 

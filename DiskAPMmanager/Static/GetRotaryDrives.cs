@@ -8,7 +8,7 @@ namespace DiskAPMmanager.Static
 {
     public static partial class StaticMethods
     {
-        public static List<DiskData> GetRotaryDrives()
+        public static List<DiskData> GetAPMRotaryDrives()
         {
             List<DiskData> disksNames = WMIMethods.GetPhysicalDiskNames();
 
@@ -22,7 +22,7 @@ namespace DiskAPMmanager.Static
 
                 bool? b = IsRotativeDevice(idd.Value);
 
-                if (b.HasValue && b.Value == true)
+                if (b.HasValue && b.Value == true && APMSupported(idd.Value))
                 {
                     DiskData ndd = new DiskData(
                         DeviceName: dd.DeviceName,
