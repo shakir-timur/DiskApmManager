@@ -33,7 +33,7 @@
         </Grid.ColumnDefinitions>
 
         <TabControl Grid.Column="1"  Margin="10" >
-            
+
             <TabItem Header="APM" DataContext="{Binding DiskCollection}" >
                 <DockPanel Background="WhiteSmoke">
                     <DockPanel DockPanel.Dock="Top" Margin="0,10,0,0" >
@@ -46,7 +46,7 @@
                                 Maximum="254" Minimum="1" SmallChange="1" AutoToolTipPlacement="TopLeft" />
                     <Grid DockPanel.Dock="Top" VerticalAlignment="Top">
 
-                        
+
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -84,7 +84,7 @@
                         <!--<Button x:Name="reloadDiskListButton" Content="Reload List" Grid.Row="6" 
                                 Click="reloadDiskListButton_Click" />-->
 
-                        <Button x:Name="Disablebutt" Click="enableOrDisableAPMbutton_Click" Grid.Row="6" Grid.Column="1" 
+                        <Button Click="enableOrDisableAPMbutton_Click" Grid.Row="6" Grid.Column="1" 
                                 IsEnabled="{Binding ElementName=mainWindow, Path=Settings.AllowAPMdisable}" >
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -121,7 +121,17 @@
             </TabItem>
 
             <TabItem Header="About">
-
+                <StackPanel>
+                    <Label Content="Disk APM configuration." FontWeight="Bold" />
+                    <Label Content="Version:" />
+                    <Label Content="{Binding Settings.Version}"/>
+                    <Label Margin="-10,0,0,0">
+                        <Hyperlink NavigateUri="https://github.com/shakir-timur/DiskApmManager" 
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            https://github.com/shakir-timur/DiskApmManager
+                        </Hyperlink>
+                    </Label>
+                </StackPanel>
             </TabItem>
         </TabControl>
 

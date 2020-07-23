@@ -81,7 +81,7 @@ DiskAPMmanager.exe <drive number> <APM value>
 
 <drive number> is the order number of the physical drive in system.
 <APM value> is a number from 1 to 255.
-APM range from 1 to 254 sets the disk's APM value to this number. 
+APM range from 1 to 254 enables and sets the disk's APM value to this number. 
 Seting APM value to 255 disables the APM on the drive.
 
 For example, the command:

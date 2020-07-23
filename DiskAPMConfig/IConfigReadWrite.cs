@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DiskAPMmanager.Structs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace DiskAPMConfig
 {
     public interface IConfigReadWrite
     {
+        IEnumerable<DiskData> ReadConfigurationFile();
 
+        bool WriteConfigurationFile(IEnumerable<DiskData> disks);
     }
 }

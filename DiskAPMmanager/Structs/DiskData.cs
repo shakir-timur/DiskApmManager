@@ -38,6 +38,21 @@ namespace DiskAPMmanager.Structs
             this.APMvalue = 0;
             this.APMenabled = false;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is DiskData data &&
+                   Model == data.Model &&
+                   SerialNo == data.SerialNo;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = -496536840;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Model);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SerialNo);
+            return hashCode;
+        }
     }
 
 

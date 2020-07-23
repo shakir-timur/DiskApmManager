@@ -44,6 +44,8 @@ namespace DiskAPMConfig
             Settings = new ProgramSettings(this, null);
 
             NotifyPropertyChanged(nameof(Settings));
+
+            CheckAdministratorPriviledges();
         }
 
         private DiskData? selectedDrive => DiskList.SelectedItem as DiskData?;
@@ -157,6 +159,14 @@ namespace DiskAPMConfig
 
             if (!isAdmin)
                 statusBar.Text = "This program requires Administrator privileges";
+
+            
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }

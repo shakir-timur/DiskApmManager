@@ -80,7 +80,7 @@ namespace DiskAPMmanager.Static
 
             uint IOCTL_ATA_PASS_THROUGH = CTL_CODE(
                 IOCTL_SCSI_BASE,
-                0x040b,
+                0x040b, 
                 METHOD_BUFFERED,
                 FILE_READ_ACCESS | FILE_WRITE_ACCESS);
 
