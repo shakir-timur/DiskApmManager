@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 
 namespace DiskAPMConfig
 {
@@ -13,9 +14,10 @@ namespace DiskAPMConfig
 
         public bool AllowAPMdisable { get; set; } = false;
 
-        public string Version => typeof(MainWindow).Assembly.GetName().Version.ToString();
+        public ICommand RegisterService { get; } = new RegisterServiceCommand();
+        public ICommand UnregisterService { get; } = new UnregisterServiceCommand();
 
-        public string GitUrl => "https://github.com/shakir-timur/DiskApmManager";
+        public string Version => typeof(MainWindow).Assembly.GetName().Version.ToString();
 
         public ProgramSettings(MainWindow mainWindow, IConfigReadWrite configRW)
         {

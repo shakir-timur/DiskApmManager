@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="RegisterServiceCommand.cs" />
+    <Compile Include="UnregisterServiceCommand.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -100,6 +102,10 @@
     <ProjectReference Include="..\DiskAPMmanager\DiskAPMmanager.csproj">
       <Project>{258fe90a-a937-4921-ba21-4c87efcf5bab}</Project>
       <Name>DiskAPMmanager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DiskAPMService\DiskAPMService.csproj">
+      <Project>{c67fa53b-2614-483d-bbb5-7bc8ffd56809}</Project>
+      <Name>DiskAPMService</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

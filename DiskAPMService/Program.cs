@@ -15,10 +15,12 @@ namespace DiskAPMService
         static void Main()
         {
             ServiceBase[] ServicesToRun;
+
             ServicesToRun = new ServiceBase[]
             {
                 new DiskAPMService()
             };
+
             ServiceBase.Run(ServicesToRun);
         }
     }

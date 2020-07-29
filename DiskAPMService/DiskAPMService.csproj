@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{242949B0-B4BD-452E-B972-7ED6CBAEFA35}</ProjectGuid>
+    <ProjectGuid>{C67FA53B-2614-483D-BBB5-7BC8FFD56809}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>DiskAPMService</RootNamespace>
     <AssemblyName>DiskAPMService</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -34,8 +34,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +53,12 @@
       <DependentUpon>DiskAPMService.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,16 +68,9 @@
     <EmbeddedResource Include="DiskAPMService.resx">
       <DependentUpon>DiskAPMService.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DiskAPMConfig\DiskAPMConfig.csproj">
-      <Project>{d41f3137-eda9-4086-908a-d5fe804ceb5b}</Project>
-      <Name>DiskAPMConfig</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DiskAPMmanager\DiskAPMmanager.csproj">
-      <Project>{258fe90a-a937-4921-ba21-4c87efcf5bab}</Project>
-      <Name>DiskAPMmanager</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

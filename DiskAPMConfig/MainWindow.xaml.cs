@@ -48,7 +48,7 @@ namespace DiskAPMConfig
             CheckAdministratorPriviledges();
         }
 
-        private DiskData? selectedDrive => DiskList.SelectedItem as DiskData?;
+        private DiskData? selectedDrive => DiskList.Items.CurrentItem as DiskData?;
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -64,13 +64,13 @@ namespace DiskAPMConfig
 
             DiskCollection = new ObservableCollection<DiskData>(diskList);
 
-            //DiskData dummy1 = new DiskData("Drive Dummy1", "Dummy Model1", "Serial No1", "Status", "500 Gb", 128, true);
-            //DiskData dummy2 = new DiskData("Drive Dummy2", "Dummy Model2", "Serial No2", "Status", "320 Gb", 254, true);
+            DiskData dummy1 = new DiskData("Drive Dummy1", "Dummy Model1", "Serial No1", "Status", "500 Gb", 0, false);
+            DiskData dummy2 = new DiskData("Drive Dummy2", "Dummy Model2", "Serial No2", "Status", "320 Gb", 254, true);
 
-            //DiskCollection = new ObservableCollection<DiskData>();
+            // DiskCollection = new ObservableCollection<DiskData>();
 
-            //DiskCollection.Add(dummy1);
-            //DiskCollection.Add(dummy2);
+            DiskCollection.Add(dummy1);
+            DiskCollection.Add(dummy2);
 
             NotifyPropertyChanged(nameof(DiskCollection));
         }
@@ -138,12 +138,17 @@ namespace DiskAPMConfig
             if (successfull)
             {
                 statusBar.Text = "APM set successfully";
-                DiskCollectionInit();
             }
             else
             {
                 statusBar.Text = "APM set failed";
             }
+
+            int selectedIndex = DiskList.SelectedIndex;
+
+            DiskCollectionInit();
+
+            DiskList.SelectedIndex = selectedIndex;
         }
 
         private void reloadDiskListButton_Click(object sender, RoutedEventArgs e)
@@ -168,5 +173,7 @@ namespace DiskAPMConfig
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
         }
+
+       
     }
 }

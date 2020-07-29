@@ -115,8 +115,10 @@
                         <Label Content="Allow APM disable" HorizontalAlignment="Center"/>
                     </StackPanel>
 
-                    <Button Content="Register service" HorizontalAlignment="Left" />
-                    <Button Content="Unregister service" HorizontalAlignment="Left" />
+                    <Button x:Name="regServiceButton" Command="{Binding Settings.RegisterService}"
+                            Content="Register service" HorizontalAlignment="Left" />
+                    <Button x:Name="unregServiceButton" Command="{Binding Settings.UnregisterService}"
+                            Content="Unregister service" HorizontalAlignment="Left" />
                 </StackPanel>
             </TabItem>
 
