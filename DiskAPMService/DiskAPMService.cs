@@ -1,4 +1,6 @@
-﻿using DiskAPMmanager.Structs;
+﻿#define SERVICE
+
+using DiskAPMmanager.Structs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +12,7 @@ using System.Reflection;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace DiskAPMService
 {
@@ -52,9 +55,12 @@ namespace DiskAPMService
 
         protected override bool OnPowerEvent(PowerBroadcastStatus powerStatus)
         {
-            Log($"Service powerEvent {powerStatus} at {DateTime.Now}");
+            if (powerStatus == PowerBroadcastStatus.ResumeAutomatic) // || powerStatus == PowerBroadcastStatus.ResumeSuspend)
+            {
+                Log($"Service powerEvent {powerStatus} at {DateTime.Now}");
 
-            ApplyConfiguraton();
+                ApplyConfiguraton();
+            }
 
             return base.OnPowerEvent(powerStatus);
         }

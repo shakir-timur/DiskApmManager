@@ -49,8 +49,10 @@ namespace DiskAPMConfig
                 }
                 catch (Exception e)
                 {
+
+#if !SERVICE
                     System.Windows.MessageBox.Show(e.StackTrace, e.GetType().Name);
-                    throw;
+#endif
                 }
             }
 
@@ -79,8 +81,10 @@ namespace DiskAPMConfig
             }
             catch (Exception e)
             {
+#if !SERVICE
                 System.Windows.MessageBox.Show(e.StackTrace, e.GetType().Name);
-                throw;
+#endif
+                return false;
             }
             
 
@@ -110,8 +114,9 @@ to   {disk.Status}
 on   {disk.Model}
 s/n: {disk.SerialNo}";
 
+#if !SERVICE
                     MessageBox.Show(tipText, title);
-
+#endif
                     return true;
                 }
             }
