@@ -12,5 +12,7 @@ namespace DiskAPMConfig
         IEnumerable<DiskData> ReadConfigurationFile();
 
         bool WriteConfigurationFile(IEnumerable<DiskData> disks);
+
+        bool WarnIfDiskStatusChange(DiskData disk, IEnumerable<DiskData> diskSet);
     }
 }

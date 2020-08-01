@@ -6,37 +6,46 @@ using System.Threading.Tasks;
 
 namespace DiskAPMmanager.Structs
 {
+    [Serializable]
     public struct DiskData
     {
-        public string DeviceName { get; }
-        public string Model { get; }
-        public string SerialNo { get; }
-        public string Status { get; }
-        public string Size { get; }
-        public byte APMvalue { get; }
-        public bool APMenabled { get; }
+        private readonly string deviceName;
+        private readonly string model;
+        private readonly string serialNo;
+        private readonly string status;
+        private readonly string size;
+        private readonly byte apmValue;
+        private readonly bool apmEnabled;
+
+        public string DeviceName => deviceName;
+        public string Model => model;
+        public string SerialNo => serialNo;
+        public string Status => status;
+        public string Size => size;
+        public byte APMvalue => apmValue;
+        public bool APMenabled => apmEnabled;
 
         public DiskData(string DeviceName, string Model, string SerialNo, string Status, string Size, byte APMvalue, bool APMenabled)
         {
-            this.DeviceName = DeviceName;
-            this.Model = Model;
-            this.SerialNo = SerialNo;
-            this.Status = Status;
-            this.Size = Size;
-            this.APMvalue = APMvalue;
-            this.APMenabled = APMenabled;
+            deviceName = DeviceName;
+            model = Model;
+            serialNo = SerialNo;
+            status = Status;
+            size = Size;
+            apmValue = APMvalue;
+            apmEnabled = APMenabled;
         }
 
         public DiskData(string DeviceName, string Status, string Size)
         {
-            this.DeviceName = DeviceName;
-            this.Status = Status;
-            this.Size = Size;
+            deviceName = DeviceName;
+            status = Status;
+            size = Size;
 
-            this.Model = null;
-            this.SerialNo = null;
-            this.APMvalue = 0;
-            this.APMenabled = false;
+            model = null;
+            serialNo = null;
+            apmValue = 0;
+            apmEnabled = false;
         }
 
         public override bool Equals(object obj)

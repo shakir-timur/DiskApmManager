@@ -31,7 +31,18 @@ namespace DiskAPMConfig
         private readonly byte DefaultAPMvalue = 128;
         private readonly byte DisableAPMValue = DiskAPMmanager.Static.StaticMethods.DISABLE_APM_VALUE;
 
-        public ProgramSettings Settings { get; set; }
+        public ProgramSettings Settings { get; private set; }
+
+        private string statusBarText = "Satus";
+        public string StatusBarText
+        {
+            get => statusBarText;
+            set
+            {
+                statusBarText = value;
+                NotifyPropertyChanged(nameof(StatusBarText));
+            }
+        }
 
         public MainWindow()
         {
@@ -41,7 +52,7 @@ namespace DiskAPMConfig
 
             DataContext = this;
 
-            Settings = new ProgramSettings(this, null);
+            Settings = new ProgramSettings(this, new DiskDataConfigWriter());
 
             NotifyPropertyChanged(nameof(Settings));
 
@@ -49,7 +60,6 @@ namespace DiskAPMConfig
         }
 
         private DiskData? selectedDrive => DiskList.Items.CurrentItem as DiskData?;
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -64,13 +74,10 @@ namespace DiskAPMConfig
 
             DiskCollection = new ObservableCollection<DiskData>(diskList);
 
-            DiskData dummy1 = new DiskData("Drive Dummy1", "Dummy Model1", "Serial No1", "Status", "500 Gb", 0, false);
-            DiskData dummy2 = new DiskData("Drive Dummy2", "Dummy Model2", "Serial No2", "Status", "320 Gb", 254, true);
-
-            // DiskCollection = new ObservableCollection<DiskData>();
-
-            DiskCollection.Add(dummy1);
-            DiskCollection.Add(dummy2);
+            //DiskData dummy1 = new DiskData("Drive Dummy1", "Dummy Model1", "Serial No1", "Status", "500 Gb", 0, false);
+            //DiskData dummy2 = new DiskData("Drive Dummy2", "Dummy Model2", "Serial No2", "Status", "320 Gb", 254, true);
+            //DiskCollection.Add(dummy1);
+            //DiskCollection.Add(dummy2);
 
             NotifyPropertyChanged(nameof(DiskCollection));
         }
@@ -137,11 +144,11 @@ namespace DiskAPMConfig
 
             if (successfull)
             {
-                statusBar.Text = "APM set successfully";
+                StatusBarText = "APM set successfully";
             }
             else
             {
-                statusBar.Text = "APM set failed";
+                StatusBarText = "APM set failed";
             }
 
             int selectedIndex = DiskList.SelectedIndex;
@@ -149,11 +156,16 @@ namespace DiskAPMConfig
             DiskCollectionInit();
 
             DiskList.SelectedIndex = selectedIndex;
-        }
 
-        private void reloadDiskListButton_Click(object sender, RoutedEventArgs e)
-        {
-            DiskCollectionInit();
+            APMslider_ValueChanged(null, null);
+
+            if (successfull)
+            {
+                int index = DiskCollection.IndexOf(drive);
+                DiskData newDrive = DiskCollection[index];
+                Settings.SaveDiskConfig(newDrive);
+            }
+
         }
 
         private void CheckAdministratorPriviledges()
@@ -163,9 +175,7 @@ namespace DiskAPMConfig
             bool isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
 
             if (!isAdmin)
-                statusBar.Text = "This program requires Administrator privileges";
-
-            
+                StatusBarText = "This program requires Administrator privileges";
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -174,6 +184,6 @@ namespace DiskAPMConfig
             e.Handled = true;
         }
 
-       
+
     }
 }

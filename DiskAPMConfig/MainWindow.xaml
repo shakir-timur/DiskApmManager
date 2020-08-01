@@ -115,10 +115,13 @@
                         <Label Content="Allow APM disable" HorizontalAlignment="Center"/>
                     </StackPanel>
 
-                    <Button x:Name="regServiceButton" Command="{Binding Settings.RegisterService}"
-                            Content="Register service" HorizontalAlignment="Left" />
-                    <Button x:Name="unregServiceButton" Command="{Binding Settings.UnregisterService}"
-                            Content="Unregister service" HorizontalAlignment="Left" />
+                    <Button x:Name="regServiceButton" Command="{Binding Settings.ServiceInstall}"
+                            Content="Register service" HorizontalAlignment="Left"
+                            CommandParameter="{x:Static local:ServiceInstallCommand+InstallType.Install}"/>
+
+                    <Button x:Name="unregServiceButton" Command="{Binding Settings.ServiceInstall}" 
+                            Content="Unregister service" HorizontalAlignment="Left" 
+                            CommandParameter="{x:Static local:ServiceInstallCommand+InstallType.Uninstall}"/>
                 </StackPanel>
             </TabItem>
 
@@ -154,7 +157,8 @@
 
         </ListView>
 
-        <TextBlock x:Name="statusBar" Grid.Row="1" Grid.ColumnSpan="2" Text="Status" FontSize="14" 
+        <TextBlock x:Name="statusBar" Grid.Row="1" Grid.ColumnSpan="2" FontSize="14" 
+                   Text="{Binding ElementName=mainWindow, Path=StatusBarText}"
                    Padding="2" Margin="2" Background="WhiteSmoke"/>
 
     </Grid>
