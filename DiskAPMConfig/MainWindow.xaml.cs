@@ -33,7 +33,7 @@ namespace DiskAPMConfig
 
         public ProgramSettings Settings { get; private set; }
 
-        private string statusBarText = "Satus";
+        private string statusBarText = "Status";
         public string StatusBarText
         {
             get => statusBarText;
@@ -125,17 +125,15 @@ namespace DiskAPMConfig
                 byte newAPM = DisableAPMValue;
 
                 ApplyAPM(newAPM, drive.Value);
-
-                APMslider_ValueChanged(null, null);
             }
             else
             {
                 byte newAPM = DefaultAPMvalue;
 
                 ApplyAPM(newAPM, drive.Value);
-
-                APMslider_ValueChanged(null, null);
             }
+
+            APMslider_ValueChanged(null, null);
         }
 
         private void ApplyAPM(byte APMvalue, DiskData drive)

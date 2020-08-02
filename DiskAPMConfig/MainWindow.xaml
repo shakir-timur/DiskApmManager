@@ -24,7 +24,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="400*"/>
-            <RowDefinition Height="24*" MinHeight="24" MaxHeight="24"/>
+            <RowDefinition Height="Auto" MinHeight="24"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -159,7 +159,7 @@
 
         <TextBlock x:Name="statusBar" Grid.Row="1" Grid.ColumnSpan="2" FontSize="14" 
                    Text="{Binding ElementName=mainWindow, Path=StatusBarText}"
-                   Padding="2" Margin="2" Background="WhiteSmoke"/>
+                    Margin="10,0,10,10" Background="WhiteSmoke"/>
 
     </Grid>
 </Window>
