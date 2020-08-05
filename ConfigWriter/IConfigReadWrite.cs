@@ -9,6 +9,8 @@ namespace DiskAPMConfig
 {
     public interface IConfigReadWrite
     {
+        string ConfigPath { get; }
+
         IEnumerable<DiskData> ReadConfigurationFile();
 
         bool WriteConfigurationFile(IEnumerable<DiskData> disks);

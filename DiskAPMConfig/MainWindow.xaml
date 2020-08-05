@@ -122,6 +122,9 @@
                     <Button x:Name="unregServiceButton" Command="{Binding Settings.ServiceInstall}" 
                             Content="Unregister service" HorizontalAlignment="Left" 
                             CommandParameter="{x:Static local:ServiceInstallCommand+InstallType.Uninstall}"/>
+
+                    <Button x:Name="clearConfigButton" Command="{Binding Settings.ClearConfig}"
+                            Content="Clear configuration" HorizontalAlignment="Left" />
                 </StackPanel>
             </TabItem>
 

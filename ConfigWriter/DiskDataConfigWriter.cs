@@ -17,7 +17,7 @@ namespace DiskAPMConfig
 
         readonly string ConfigDirectoryPath;
 
-        readonly string ConfigFilePath;
+        public string ConfigPath { get; }
 
         public DiskDataConfigWriter()
         {
@@ -25,18 +25,18 @@ namespace DiskAPMConfig
             Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
             configFolderName);
 
-            ConfigFilePath = Path.Combine(ConfigDirectoryPath, configFileName);
+            ConfigPath = Path.Combine(ConfigDirectoryPath, configFileName);
         }
 
         public IEnumerable<DiskData> ReadConfigurationFile()
         {
             HashSet<DiskData> diskSet = new HashSet<DiskData>();
 
-            if (File.Exists(ConfigFilePath))
+            if (File.Exists(ConfigPath))
             {
                 try
                 {
-                    string config = File.ReadAllText(ConfigFilePath);
+                    string config = File.ReadAllText(ConfigPath);
 
                     using (Stream stream = new MemoryStream(Encoding.UTF8.GetBytes(config)))
                     {
@@ -76,7 +76,7 @@ namespace DiskAPMConfig
 
                     serializer.WriteObject(stream, diskDatas);
 
-                    File.WriteAllBytes(ConfigFilePath, stream.ToArray());
+                    File.WriteAllBytes(ConfigPath, stream.ToArray());
                 }
             }
             catch (Exception e)
@@ -86,7 +86,7 @@ namespace DiskAPMConfig
 #endif
                 return false;
             }
-            
+
 
             return true;
         }
@@ -102,9 +102,9 @@ namespace DiskAPMConfig
 
             if (diskSet.TryGetValue(disk, out DiskData oldDiskValue))
             {
-                if(disk.Status != oldDiskValue.Status)
+                if (disk.Status != oldDiskValue.Status)
                 {
-                    
+
                     string title = "Attention";
                     string tipText =
 $@"DiskAPMManager:
@@ -123,5 +123,7 @@ s/n: {disk.SerialNo}";
 
             return false;
         }
+
+        
     }
 }

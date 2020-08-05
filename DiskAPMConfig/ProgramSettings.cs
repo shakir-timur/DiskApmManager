@@ -22,6 +22,8 @@ namespace DiskAPMConfig
 
         public ICommand ServiceInstall { get; }
 
+        public ClearConfigCommand ClearConfig { get; }
+
         public string Version => typeof(MainWindow).Assembly.GetName().Version.ToString();
 
         public ProgramSettings(MainWindow mainWindow, IConfigReadWrite configRW)
@@ -32,6 +34,7 @@ namespace DiskAPMConfig
 
             ServiceInstall = new ServiceInstallCommand(this);
 
+            ClearConfig = new ClearConfigCommand(this.configRW.ConfigPath);
         }
 
         internal void SaveDiskConfig(DiskData disk)
@@ -51,6 +54,8 @@ namespace DiskAPMConfig
             diskSet.Add(disk);
 
             configRW.WriteConfigurationFile(diskSet);
+
+            ClearConfig.SignalCanExecuteChanged();
         }
 
     }
