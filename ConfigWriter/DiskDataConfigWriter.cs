@@ -61,13 +61,13 @@ namespace DiskAPMConfig
 
         public bool WriteConfigurationFile(IEnumerable<DiskData> disks)
         {
-            if (!Directory.Exists(ConfigDirectoryPath))
-            {
-                Directory.CreateDirectory(ConfigDirectoryPath);
-            }
-
             try
             {
+                if (!Directory.Exists(ConfigDirectoryPath))
+                {
+                    Directory.CreateDirectory(ConfigDirectoryPath);
+                }
+
                 DiskData[] diskDatas = disks.ToArray();
 
                 using (MemoryStream stream = new MemoryStream())
@@ -86,7 +86,6 @@ namespace DiskAPMConfig
 #endif
                 return false;
             }
-
 
             return true;
         }
@@ -123,7 +122,5 @@ s/n: {disk.SerialNo}";
 
             return false;
         }
-
-        
     }
 }
