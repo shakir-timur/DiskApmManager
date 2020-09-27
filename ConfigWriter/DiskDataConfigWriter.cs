@@ -103,7 +103,7 @@ namespace DiskAPMConfig
             {
                 if (disk.Status != oldDiskValue.Status)
                 {
-
+#if !SERVICE
                     string title = "Attention";
                     string tipText =
 $@"DiskAPMManager:
@@ -113,7 +113,7 @@ to   {disk.Status}
 on   {disk.Model}
 s/n: {disk.SerialNo}";
 
-#if !SERVICE
+
                     MessageBox.Show(tipText, title);
 #endif
                     return true;
