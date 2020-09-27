@@ -17,7 +17,7 @@ namespace DiskAPMConfig
         public event EventHandler CanExecuteChanged;
 
         readonly string netPath = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory();
-        readonly string instUtilName = "installutil.exe";
+        readonly string instUtilName = "InstallUtil.exe";
         readonly string serviceAppName = "DiskAPMService.exe";
 
         public enum InstallType
