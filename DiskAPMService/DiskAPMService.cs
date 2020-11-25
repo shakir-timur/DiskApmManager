@@ -77,8 +77,10 @@ namespace DiskAPMService
 
             foreach (var detectedDisk in detectedDisks)
             {
-                if (savedDisksSet.TryGetValue(detectedDisk, out DiskData savedDisk))
+                if (savedDisksSet.Contains(detectedDisk))
                 {
+                    DiskData savedDisk = savedDisksSet.Where(d => d.Equals(detectedDisk)).Single();
+
                     bool apmEnabled = savedDisk.APMenabled;
 
                     byte newApm = apmEnabled ?

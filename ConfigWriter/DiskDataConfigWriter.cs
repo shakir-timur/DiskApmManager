@@ -90,7 +90,7 @@ namespace DiskAPMConfig
             return true;
         }
 
-        public bool WarnIfDiskStatusChange(DiskData disk, IEnumerable<DiskData> disks)
+        public bool WarnIfDiskStatusChange(DiskData diskNew, IEnumerable<DiskData> disks)
         {
             HashSet<DiskData> diskSet = disks as HashSet<DiskData>;
 
@@ -99,24 +99,27 @@ namespace DiskAPMConfig
                 diskSet = new HashSet<DiskData>(disks);
             }
 
-            if (diskSet.TryGetValue(disk, out DiskData oldDiskValue))
+            if (diskSet.Contains(diskNew))
             {
-                if (disk.Status != oldDiskValue.Status)
+                foreach (var disk in diskSet)
                 {
+                    if (disk.Equals(diskNew) && diskNew.Status != disk.Status)
+                    {
 #if !SERVICE
-                    string title = "Attention";
-                    string tipText =
-$@"DiskAPMManager:
+                        string title = "Attention";
+                        string tipText =
+    $@"DiskAPMManager:
 Disk status change detected
-from {oldDiskValue.Status}
-to   {disk.Status}
-on   {disk.Model}
-s/n: {disk.SerialNo}";
+from {disk.Status}
+to   {diskNew.Status}
+on   {diskNew.Model}
+s/n: {diskNew.SerialNo}";
 
 
-                    MessageBox.Show(tipText, title);
+                        MessageBox.Show(tipText, title);
 #endif
-                    return true;
+                        return true;
+                    }
                 }
             }
 

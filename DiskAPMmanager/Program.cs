@@ -65,9 +65,8 @@ namespace DiskAPMmanager
                 PrintUsage();
             }
 
-            //Console.WriteLine("\nPress any key");
-
-            Console.ReadKey();
+            // Console.WriteLine("\nPress any key");
+            // Console.ReadKey();
 
             return 0;
         }
