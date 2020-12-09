@@ -22,8 +22,8 @@ namespace DiskAPMConfig
         public DiskDataConfigWriter()
         {
             ConfigDirectoryPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-            configFolderName);
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                configFolderName);
 
             ConfigPath = Path.Combine(ConfigDirectoryPath, configFileName);
         }
@@ -42,16 +42,16 @@ namespace DiskAPMConfig
                     {
                         DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(DiskData[]));
 
-                        IEnumerable<DiskData> diskDatas = (DiskData[])serializer.ReadObject(stream);
+                        IEnumerable<DiskData> diskData = (DiskData[])serializer.ReadObject(stream);
 
-                        diskSet.UnionWith(diskDatas);
+                        diskSet.UnionWith(diskData);
                     }
                 }
                 catch (Exception e)
                 {
 
 #if !SERVICE
-                    System.Windows.MessageBox.Show(e.StackTrace, e.GetType().Name);
+                    MessageBox.Show(e.StackTrace, e.GetType().Name);
 #endif
                 }
             }
@@ -68,13 +68,13 @@ namespace DiskAPMConfig
                     Directory.CreateDirectory(ConfigDirectoryPath);
                 }
 
-                DiskData[] diskDatas = disks.ToArray();
+                DiskData[] diskData = disks.ToArray();
 
                 using (MemoryStream stream = new MemoryStream())
                 {
                     DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(DiskData[]));
 
-                    serializer.WriteObject(stream, diskDatas);
+                    serializer.WriteObject(stream, diskData);
 
                     File.WriteAllBytes(ConfigPath, stream.ToArray());
                 }
@@ -82,7 +82,7 @@ namespace DiskAPMConfig
             catch (Exception e)
             {
 #if !SERVICE
-                System.Windows.MessageBox.Show(e.StackTrace, e.GetType().Name);
+                MessageBox.Show(e.StackTrace, e.GetType().Name);
 #endif
                 return false;
             }

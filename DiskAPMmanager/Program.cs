@@ -74,21 +74,21 @@ namespace DiskAPMmanager
         static void PrintUsage()
         {
             string usageDescription =
-@"
-Usage:
-DiskAPMmanager.exe <drive number> <APM value>
+    @"
+    Usage:
+    DiskAPMmanager.exe <drive number> <APM value>
 
-<drive number> is the order number of the physical drive in system.
-<APM value> is a number from 1 to 255.
-APM range from 1 to 254 enables and sets the disk's APM value to this number. 
-Seting APM value to 255 disables the APM on the drive.
+    <drive number> is the order number of the physical drive in system.
+    <APM value> is a number from 1 to 255.
+    APM range from 1 to 254 enables and sets the disk's APM value to this number. 
+    Seting APM value to 255 disables the APM on the drive.
 
-For example, the command:
-DiskAPMmanager.exe 0 254
-will set PHYSICALDRIVE0 APM value to 254.
+    For example, the command:
+    DiskAPMmanager.exe 0 254
+    will set PHYSICALDRIVE0 APM value to 254.
 
-Suitable disks found on your machine (PHYSICALDRIVE0 is drive number 0):
-";
+    Suitable disks found on your machine (PHYSICALDRIVE0 is drive number 0):
+    ";
 
             Console.WriteLine(usageDescription);
 
@@ -135,6 +135,8 @@ Suitable disks found on your machine (PHYSICALDRIVE0 is drive number 0):
 
                 Console.WriteLine();
             }
+
+            Console.WriteLine();
         }
 
     }
