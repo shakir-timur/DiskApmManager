@@ -52,7 +52,7 @@ namespace DiskAPMmanager.Static
                 string message = GetErrorMessage(Marshal.GetLastWin32Error());
                 Console.WriteLine($"CreateFile (IdentifyDevice) with disk {deviceName} failed. Error: " + message);
 #endif
-                driveHandle.Close();
+                driveHandle?.Close();
                 return null;
             }
 
